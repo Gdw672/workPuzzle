@@ -16,7 +16,7 @@ public class enemySpawn : MonoBehaviour
         enemyRnd = randomSpawn.GetComponent<randomSpawnofEnemy>();
 
 
-        spawnEnemyes();
+       // spawnEnemyes();
        
 
 
