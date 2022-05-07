@@ -8,7 +8,7 @@ public class playerGoToEnemy : MonoBehaviour
     bool isNeedMove = false; 
     bool isGoYDone = false;
     short dubleClick;
-   internal bool isCollisionWithEnemy;
+   internal bool isCollisionWithEnemy, wasEnemyDestroy;
    
     float laserLeng = 50f;
     GameObject enemy;
@@ -25,55 +25,77 @@ public class playerGoToEnemy : MonoBehaviour
 
     private void Update()
     {
-        if(Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             Touch touch = new Touch();
 
             touch = Input.GetTouch(0);
 
-            
-            if(touch.phase == TouchPhase.Began)
+
+            if (touch.phase == TouchPhase.Began)
             {
                 touch.radius = 0.02f;
-                Vector2 touchPos = Camera.main.ScreenToWorldPoint(new Vector2(touch.position.x , touch.position.y));
-              
-                    RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero);
+                Vector2 touchPos = Camera.main.ScreenToWorldPoint(new Vector2(touch.position.x, touch.position.y));
 
-                if (hit.collider != null && hit.collider.gameObject == enemy)
-                {
-                    dubleClick += 1;
-                }
+                RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero);
 
-                if (hit.collider != null && hit.collider.gameObject != enemy)
+                if (hit.collider != null)
                 {
-                    if(hit.collider.gameObject.tag == "enemy" || hit.collider.gameObject.tag == "heavyBandit" || hit.collider.gameObject.tag == "knight")
+
+
+
+
+
+
+
+                    if (hit.collider.gameObject == enemy)
                     {
-                        
-
-                        enemy = hit.collider.gameObject;
-                        dubleClick = 0;
                         dubleClick += 1;
-                        
-                        
-                    
                     }
+
+                    if (hit.collider.gameObject != enemy)
+                    {
+                        if (hit.collider.gameObject.tag == "enemy" || hit.collider.gameObject.tag == "heavyBandit" || hit.collider.gameObject.tag == "knight")
+                        {
+
+                            enemy = hit.collider.gameObject;
+                            dubleClick = 0;
+                            dubleClick += 1;
+                            isGoYDone = false;
+
+
+                        }
+                    }
+
+
+                    if ((hit.collider.gameObject.transform.position.x != gameObject.transform.position.x || hit.collider.gameObject.transform.position.y != gameObject.transform.position.y) && dubleClick == 2 && wasEnemyDestroy == false)
+                    {
+                        isNeedMove = true;
+                    }
+
+                    if ((hit.collider.gameObject.transform.position.x != gameObject.transform.position.x || hit.collider.gameObject.transform.position.y != gameObject.transform.position.y) && dubleClick == 2 && wasEnemyDestroy == true)
+                    {
+                        isNeedMove = true;
+                        print("yes");
+                    }
+
                 }
-
-
-                if ((hit.collider.gameObject.transform.position.x != gameObject.transform.position.x || hit.collider.gameObject.transform.position.y != gameObject.transform.position.y) && dubleClick == 2)
-                {
-                    isNeedMove = true;
-                }
-
-
             }
-
-
+        
+        
         }
 
        if(isNeedMove)
         {
-            goingToEnemy();
+            if(wasEnemyDestroy == false)
+            {
+                goingToEnemy();
+
+            }
+            if(wasEnemyDestroy)
+            {
+                goBackAfterDestroy();
+            }
 
            /* if(enemy.tag == "heavyBandit")
             {
@@ -101,9 +123,16 @@ public class playerGoToEnemy : MonoBehaviour
     private void FixedUpdate()
     {
 
-       
+        
 
-        if (isCollisionWithEnemy)
+       /* if (isCollisionWithEnemy)
+        {
+            isNeedMove = false;
+            rigidbodyComp.velocity = Vector2.zero;
+
+        }*/
+
+        if( enemy == null)
         {
             isNeedMove = false;
             rigidbodyComp.velocity = Vector2.zero;
@@ -112,25 +141,42 @@ public class playerGoToEnemy : MonoBehaviour
 
     }
 
+    void goBackAfterDestroy()
+    {
+        Vector2 nowPosition = gameObject.transform.position;
+        rigidbodyComp.velocity = new Vector2(-0.6f, 0);
+        if(gameObject.transform.position.x < enemy.transform.position.x - 0.6f)
+        {
+            rigidbodyComp.velocity = Vector2.zero;
+            wasEnemyDestroy = false;
+            isNeedMove = true;
+        }
+    
+
+    }
+
+
 
     void goingToEnemy()
     {
 
-      
+        print("go");
 
-        if (gameObject.transform.position.y < enemy.gameObject.transform.position.y && isCollisionWithEnemy == false)
+
+        if (gameObject.transform.position.y < enemy.gameObject.transform.position.y )
         {
             goUp();
+            print("goup");
         }
 
-        if (gameObject.transform.position.y > enemy.gameObject.transform.position.y && isCollisionWithEnemy == false)
+        if (gameObject.transform.position.y > enemy.gameObject.transform.position.y)
             {
 
                 goDown();
             }
 
 
-        if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x && isCollisionWithEnemy == false)
+        if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x && isGoYDone == true)
         {
             goRight();
         }

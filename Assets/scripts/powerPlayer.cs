@@ -5,10 +5,15 @@ using UnityEngine;
 public class powerPlayer : MonoBehaviour
 
 {
-    public static int powerOfPlayer = 100;
+    enemyAnim enemyAnimComp;
+    playerGoToEnemy playerGo;
+    playerAnim anim;
+    public static int powerOfPlayer = 20;
 
     void Start()
     {
+        playerGo = GetComponent<playerGoToEnemy>();
+        anim = GetComponent<playerAnim>();
     }
 
     // Update is called once per frame
@@ -17,11 +22,35 @@ public class powerPlayer : MonoBehaviour
         
     }
 
-  public static void checkPower(GameObject enemy)
+  public void checkPower(GameObject enemy)
     {
-        if(powerOfPlayer > enemy.gameObject.GetComponent<powerEnemy>().powerEnemyInt)
+        enemyAnimComp = enemy.GetComponent<enemyAnim>();
+
+        if (powerOfPlayer > enemy.gameObject.GetComponent<powerEnemy>().powerEnemyInt)
         {
-            Destroy(enemy.gameObject);
+
+            if (enemy.tag == "knight")
+            {
+                
+                StartCoroutine(enemyAnimComp.startDeath(0.45f));
+            }
+            if(enemy.tag == "heavyBandit")
+            {
+                StartCoroutine(enemyAnimComp.startDeath(0.42f));
+
+            }
+
+            playerGo.wasEnemyDestroy = true;
+            anim.startAttack();
         }
+ 
+        if(powerOfPlayer < enemy.gameObject.GetComponent<powerEnemy>().powerEnemyInt)
+        {
+             StartCoroutine(enemyAnimComp.startAttack());
+            StartCoroutine(anim.getHurt());
+        }
+
     }
+
+
 }

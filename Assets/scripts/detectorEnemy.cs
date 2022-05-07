@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class detectorEnemy : MonoBehaviour
 {
+    powerPlayer power;
     playerGoToEnemy playerGo;
+    Rigidbody2D playerRigidbody;
     void Start()
     {
+        power = gameObject.transform.parent.GetComponent<powerPlayer>();
+        playerRigidbody =gameObject.transform.parent.GetComponent<Rigidbody2D>();
         playerGo = gameObject.transform.parent.GetComponent<playerGoToEnemy>();
     }
 
@@ -15,10 +19,16 @@ public class detectorEnemy : MonoBehaviour
             if(collision.tag == "heavyBandit" || collision.tag == "knight")
             {
             print("detect");
-               playerGo.isCollisionWithEnemy = true;
-            powerPlayer.checkPower(collision.gameObject);
+            StartCoroutine(stop());
+            power.checkPower(collision.gameObject);
+            
             }
     }
+    IEnumerator stop()
+    {
+        yield return new WaitForSeconds(0.1f);
+        playerRigidbody.velocity = Vector2.zero;
 
+    }
    
 }
