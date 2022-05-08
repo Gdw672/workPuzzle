@@ -7,13 +7,17 @@ public class textPlayer : MonoBehaviour
     TextMesh text;
     void Start()
     {
-        text = GetComponent<TextMesh>();
-        text.text = powerPlayer.powerOfPlayer.ToString();
+        takePower();
 
     }
 
-    // Update is called once per frame
     void Update()
     {
+    }
+
+   internal void takePower()
+    {
+        text = GetComponent<TextMesh>();
+        text.text = powerPlayer.powerOfPlayer.ToString();
     }
 }

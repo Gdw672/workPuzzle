@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class powerEnemy : MonoBehaviour
 {
-    internal int powerEnemyInt; 
-    void Start()
+    public static int sumOfEnemy;
+   [SerializeField] internal int powerEnemyInt;
+    private void Awake()
     {
-        powerEnemyInt = 5;
+        sumOfEnemy += 1;
+        
+    }
+
+    private void Start()
+    {
     }
 
     // Update is called once per frame

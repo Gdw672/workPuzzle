@@ -8,10 +8,13 @@ public class powerPlayer : MonoBehaviour
     enemyAnim enemyAnimComp;
     playerGoToEnemy playerGo;
     playerAnim anim;
-    public static int powerOfPlayer = 20;
+    textPlayer text;
+   
+    public static int powerOfPlayer = 9;
 
     void Start()
     {
+        text = transform.GetChild(1).GetComponent<textPlayer>();
         playerGo = GetComponent<playerGoToEnemy>();
         anim = GetComponent<playerAnim>();
     }
@@ -26,7 +29,7 @@ public class powerPlayer : MonoBehaviour
     {
         enemyAnimComp = enemy.GetComponent<enemyAnim>();
 
-        if (powerOfPlayer > enemy.gameObject.GetComponent<powerEnemy>().powerEnemyInt)
+        if (powerOfPlayer >= enemy.gameObject.GetComponent<powerEnemy>().powerEnemyInt)
         {
 
             if (enemy.tag == "knight")
@@ -40,6 +43,8 @@ public class powerPlayer : MonoBehaviour
 
             }
 
+            powerOfPlayer += enemy.GetComponent<powerEnemy>().powerEnemyInt;
+            text.takePower();
             playerGo.wasEnemyDestroy = true;
             anim.startAttack();
         }
