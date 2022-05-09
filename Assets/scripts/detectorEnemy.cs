@@ -16,7 +16,7 @@ public class detectorEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-            if(collision.tag == "heavyBandit" || collision.tag == "knight")
+            if((collision.tag == "heavyBandit" || collision.tag == "knight") && collision.gameObject == playerGo.enemy)
             {
             print("detect");
             StartCoroutine(stop());

@@ -9,13 +9,15 @@ public class playerGoToEnemy : MonoBehaviour
     bool isGoYDone = false;
     short dubleClick;
    internal bool isCollisionWithEnemy, wasEnemyDestroy;
+    Vector2 sizePlayer;
    
     float laserLeng = 50f;
-    GameObject enemy;
+   internal GameObject enemy;
     Rigidbody2D rigidbodyComp;
 
     private void Start()
     {
+        sizePlayer = transform.localScale;
         dubleClick = 0;
         rigidbodyComp = GetComponent<Rigidbody2D>();
     }
@@ -90,7 +92,10 @@ public class playerGoToEnemy : MonoBehaviour
             if(wasEnemyDestroy == false)
             {
                 goingToEnemy();
-
+                if(gameObject.transform.position.x > enemy.transform.position.x)
+                {
+                    gameObject.transform.localScale = new Vector2(-sizePlayer.x, sizePlayer.y);
+                }
             }
             if(wasEnemyDestroy)
             {
@@ -143,14 +148,11 @@ public class playerGoToEnemy : MonoBehaviour
 
     void goBackAfterDestroy()
     {
-        Vector2 nowPosition = gameObject.transform.position;
-        rigidbodyComp.velocity = new Vector2(-0.6f, 0);
-        if(gameObject.transform.position.x < enemy.transform.position.x - 0.6f)
-        {
+       
             rigidbodyComp.velocity = Vector2.zero;
             wasEnemyDestroy = false;
             isNeedMove = true;
-        }
+        
     
 
     }
@@ -176,13 +178,17 @@ public class playerGoToEnemy : MonoBehaviour
             }
 
 
-        if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x && isGoYDone == true)
+        if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x)
         {
             goRight();
         }
+        if (isGoYDone && gameObject.transform.position.x > enemy.transform.position.x)
+        {
+            goLeft();
+        }
 
-       
-       
+
+
     }
 
 
@@ -265,6 +271,18 @@ public class playerGoToEnemy : MonoBehaviour
             rigidbodyComp.velocity = new Vector2(0.6f, 0);
         }
         else if (gameObject.transform.position.x < enemy.transform.position.x && isCollisionWithEnemy == true)
+        {
+            rigidbodyComp.velocity = Vector2.zero;
+        }
+    }
+
+    void goLeft()
+    {
+        if (gameObject.transform.position.x > enemy.transform.position.x && isCollisionWithEnemy == false)
+        {
+            rigidbodyComp.velocity = new Vector2(-0.6f, 0);
+        }
+        else if (gameObject.transform.position.x > enemy.transform.position.x && isCollisionWithEnemy == true)
         {
             rigidbodyComp.velocity = Vector2.zero;
         }
