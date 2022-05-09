@@ -10,16 +10,13 @@ public class powerEnemyConrollerScript : MonoBehaviour
     {
 
         powerEnemyMass = GameObject.FindObjectsOfType<powerEnemy>();
-
-        print(powerEnemyMass.Length);
-
         randomArray(powerEnemyMass);
         givePowerEnemy();
     }
 
     void givePowerEnemy()
     {
-        power = random.Next(2, powerPlayer.powerOfPlayer);
+        power = random.Next(5, powerPlayer.powerOfPlayer);
         for (int i = 0; i < powerEnemyMass.Length; i++)
         {
             if (i == 0)

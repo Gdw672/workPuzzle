@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class enemyTextPower : MonoBehaviour
 {
+    bool wasDoneFunc = false;
+    int randonNums;
+    float power;
     Vector2 scaleOfText;
     TextMesh textmesh;
-    int power;
-    string powerToString;
-    System.Random rnd = new System.Random();
+   static System.Random rnd = new System.Random();
 
     private void Start()
     {
-        scaleOfText = gameObject.transform.localScale;
+
+
         power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
         textmesh = GetComponent<TextMesh>();
-         textmesh.text = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt.ToString();
+        scaleOfText = gameObject.transform.localScale;
+         textmesh = GetComponent<TextMesh>();
+        randonNums = rnd.Next(1, 8);
         choosePositionText();
+      
     }
     private void Update()
     {
+
+        if (wasDoneFunc == false)
+        {
+            changeText();
+            wasDoneFunc = true;
+        }
         gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x, gameObject.transform.localScale.y);
-        textmesh.text = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt.ToString();
+
     }
 
     void choosePositionText()
@@ -43,6 +54,106 @@ public class enemyTextPower : MonoBehaviour
         gameObject.transform.localScale = scaleOfText;
     }
 
+    void changeText()
+    {
+        int numOfChange = rnd.Next(1, 6);
+        if(numOfChange == 1)
+        {
+            toSimple();
+        }
+        if(numOfChange == 2)
+        {
+            degree();
+        }
+       if(numOfChange == 3)
+        {
+            sqrtText();
+        }
+       if(numOfChange == 4)
+        {
+            toPlus();
+        }
+       if(numOfChange == 5)
+        {
+            toMinus();
+        }
+        print(numOfChange);
+    }
 
+
+    void toSimple()
+    {
+        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        textmesh.text = power.ToString();
+
+        if (power % 2 == 0)
+        {
+            textmesh.text = $"{power / 2} * 2";
+        }
+        else if (power % 3 == 0)
+        {
+            textmesh.text = $"{power / 3} * 3";
+        }
+        else if (power % 5 == 0)
+        {
+            textmesh.text = $"{power / 5} * 5";
+
+        }
+    }
+
+    void degree()
+    {
+        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        textmesh.text = power.ToString();
+        double num = Mathf.Sqrt(power);
+        string[] array = num.ToString().Split(',');
+        if (array.Length == 1)
+        {
+            print(power);
+            textmesh.text = $"{ Mathf.Sqrt(power)}² ";
+        }
+    }
+
+    void sqrtText()
+    {
+        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        if(power < 20)
+        {
+            textmesh.text = $"√{power * power}";
+
+        }
+        else
+        {
+            textmesh.text = power.ToString();
+        }
+
+
+    }
+
+    void toPlus()
+    {
+        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+
+        textmesh.text = power.ToString();
+
+        
+        if (power > 10)
+        {
+            textmesh.text = $"{power - randonNums} + {randonNums}";
+        }
+    }
+  
+    void toMinus()
+    {
+        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+
+        textmesh.text = power.ToString();
+
+
+            textmesh.text = $"{power + randonNums} - {randonNums}";
+        
+
+
+    }
 
 }

@@ -9,6 +9,7 @@ public class powerPlayer : MonoBehaviour
     playerGoToEnemy playerGo;
     playerAnim anim;
     textPlayer text;
+    GameObject enemyTime;
    
     public static int powerOfPlayer = 9;
 
@@ -31,20 +32,20 @@ public class powerPlayer : MonoBehaviour
 
         if (powerOfPlayer >= enemy.gameObject.GetComponent<powerEnemy>().powerEnemyInt)
         {
+            enemyTime = enemy;
 
             if (enemy.tag == "knight")
             {
                 
-                StartCoroutine(enemyAnimComp.startDeath(0.45f));
+              //  StartCoroutine(enemyAnimComp.startDeath(0.45f));
             }
             if(enemy.tag == "heavyBandit")
             {
-                StartCoroutine(enemyAnimComp.startDeath(0.42f));
+            //    StartCoroutine(enemyAnimComp.startDeath(0.42f));
 
             }
 
             powerOfPlayer += enemy.GetComponent<powerEnemy>().powerEnemyInt;
-            text.takePower();
             playerGo.wasEnemyDestroy = true;
             anim.startAttack();
         }
@@ -57,5 +58,10 @@ public class powerPlayer : MonoBehaviour
 
     }
 
+   [SerializeField] void enemyStartDeath()
+    {
+        enemyTime.GetComponent<Animator>().SetBool("isHit", true);
+        text.takePower();
+    }
 
 }

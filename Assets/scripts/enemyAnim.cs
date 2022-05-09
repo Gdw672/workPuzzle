@@ -5,6 +5,7 @@ using UnityEngine;
 public class enemyAnim : MonoBehaviour
 
 {
+    
     BoxCollider2D enemyCollider;
     Animator animator;
     void Start()
@@ -34,6 +35,7 @@ public class enemyAnim : MonoBehaviour
    [SerializeField] void deathOfCollider()
     {
         enemyCollider.enabled = false;
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
 }
