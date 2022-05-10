@@ -10,13 +10,13 @@ public class detectorEnemy : MonoBehaviour
     void Start()
     {
         power = gameObject.transform.parent.GetComponent<powerPlayer>();
-        playerRigidbody =gameObject.transform.parent.GetComponent<Rigidbody2D>();
+        playerRigidbody = gameObject.transform.parent.GetComponent<Rigidbody2D>();
         playerGo = gameObject.transform.parent.GetComponent<playerGoToEnemy>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-            if((collision.tag == "heavyBandit" || collision.tag == "knight") && collision.gameObject == playerGo.enemy)
+        if ((collision.tag == "heavyBandit" || collision.tag == "knight" || collision.tag == "bringer" || collision.tag == "darkKnight") && collision.gameObject == playerGo.enemy)
             {
             print("detect");
             StartCoroutine(stop());

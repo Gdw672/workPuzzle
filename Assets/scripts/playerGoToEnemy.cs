@@ -5,14 +5,15 @@ using UnityEngine.EventSystems;
 
 public class playerGoToEnemy : MonoBehaviour
 {
-    bool isNeedMove = false; 
+    bool isNeedMove = false;
     bool isGoYDone = false;
+    bool isGoDownDon = false;
     short dubleClick;
-   internal bool isCollisionWithEnemy, wasEnemyDestroy;
+    internal bool isCollisionWithEnemy, wasEnemyDestroy;
     Vector2 sizePlayer;
-   
+
     float laserLeng = 50f;
-   internal GameObject enemy;
+    internal GameObject enemy;
     Rigidbody2D rigidbodyComp;
 
     private void Start()
@@ -57,13 +58,14 @@ public class playerGoToEnemy : MonoBehaviour
 
                     if (hit.collider.gameObject != enemy)
                     {
-                        if (hit.collider.gameObject.tag == "enemy" || hit.collider.gameObject.tag == "heavyBandit" || hit.collider.gameObject.tag == "knight")
+                        if (hit.collider.gameObject.tag == "enemy" || hit.collider.gameObject.tag == "heavyBandit" || hit.collider.gameObject.tag == "knight" || hit.collider.gameObject.tag == "bringer" || hit.collider.tag == "darkKnight")
                         {
 
                             enemy = hit.collider.gameObject;
                             dubleClick = 0;
                             dubleClick += 1;
                             isGoYDone = false;
+                            isGoDownDon = false;
 
 
                         }
@@ -78,66 +80,65 @@ public class playerGoToEnemy : MonoBehaviour
                     if ((hit.collider.gameObject.transform.position.x != gameObject.transform.position.x || hit.collider.gameObject.transform.position.y != gameObject.transform.position.y) && dubleClick == 2 && wasEnemyDestroy == true)
                     {
                         isNeedMove = true;
-                        print("yes");
                     }
 
                 }
             }
-        
-        
+
+
         }
 
-       if(isNeedMove)
+        if (isNeedMove)
         {
-            if(wasEnemyDestroy == false)
+            if (wasEnemyDestroy == false)
             {
                 goingToEnemy();
-                if(gameObject.transform.position.x > enemy.transform.position.x)
+                if (gameObject.transform.position.x > enemy.transform.position.x)
                 {
                     gameObject.transform.localScale = new Vector2(-sizePlayer.x, sizePlayer.y);
                 }
             }
-            if(wasEnemyDestroy)
+            if (wasEnemyDestroy)
             {
                 goBackAfterDestroy();
             }
 
-           /* if(enemy.tag == "heavyBandit")
-            {
-                if (gameObject.transform.position.y  > enemy.gameObject.transform.position.y)
-                {
-                    isNeedMove = false;
-                    rigidbodyComp.velocity = Vector2.zero;
-                }
-           }
-            if (enemy.tag == "enemy")
-            {
-                if (gameObject.transform.position.y + 0.25f > enemy.gameObject.transform.position.y)
-                {
-                    isNeedMove = false;
-                    rigidbodyComp.velocity = Vector2.zero;
-                }
-            }*/
+            /* if(enemy.tag == "heavyBandit")
+             {
+                 if (gameObject.transform.position.y  > enemy.gameObject.transform.position.y)
+                 {
+                     isNeedMove = false;
+                     rigidbodyComp.velocity = Vector2.zero;
+                 }
+            }
+             if (enemy.tag == "enemy")
+             {
+                 if (gameObject.transform.position.y + 0.25f > enemy.gameObject.transform.position.y)
+                 {
+                     isNeedMove = false;
+                     rigidbodyComp.velocity = Vector2.zero;
+                 }
+             }*/
 
-           
+
 
         }
-        
+
     }
 
     private void FixedUpdate()
     {
 
-        
 
-       /* if (isCollisionWithEnemy)
-        {
-            isNeedMove = false;
-            rigidbodyComp.velocity = Vector2.zero;
 
-        }*/
+        /* if (isCollisionWithEnemy)
+         {
+             isNeedMove = false;
+             rigidbodyComp.velocity = Vector2.zero;
 
-        if( enemy == null)
+         }*/
+
+        if (enemy == null)
         {
             isNeedMove = false;
             rigidbodyComp.velocity = Vector2.zero;
@@ -148,12 +149,12 @@ public class playerGoToEnemy : MonoBehaviour
 
     void goBackAfterDestroy()
     {
-       
-            rigidbodyComp.velocity = Vector2.zero;
-            wasEnemyDestroy = false;
-            isNeedMove = true;
-        
-    
+
+        rigidbodyComp.velocity = Vector2.zero;
+        wasEnemyDestroy = false;
+        isNeedMove = true;
+
+
 
     }
 
@@ -161,34 +162,104 @@ public class playerGoToEnemy : MonoBehaviour
 
     void goingToEnemy()
     {
-
-        print("go");
-
-
-        if (gameObject.transform.position.y < enemy.gameObject.transform.position.y )
+        if (enemy.tag != "bringer" && enemy.tag != "knight" && enemy.tag != "darkKnight")
         {
-            goUp();
-            print("goup");
-        }
+            if (gameObject.transform.position.y < enemy.gameObject.transform.position.y)
+            {
+                goUp();
+            }
 
-        if (gameObject.transform.position.y > enemy.gameObject.transform.position.y)
+            if (gameObject.transform.position.y > enemy.gameObject.transform.position.y)
             {
 
                 goDown();
             }
 
 
-        if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x)
-        {
-            goRight();
+            if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x)
+            {
+                goRight();
+            }
+            if (isGoYDone && gameObject.transform.position.x > enemy.transform.position.x)
+            {
+                goLeft();
+            }
         }
-        if (isGoYDone && gameObject.transform.position.x > enemy.transform.position.x)
+
+        if (enemy.tag == "bringer")
         {
-            goLeft();
+            if (gameObject.transform.position.y + 0.3f < enemy.gameObject.transform.position.y)
+            {
+                goUp();
+                print("goup");
+            }
+
+            if (gameObject.transform.position.y - 0.2f> enemy.gameObject.transform.position.y)
+            {
+
+                goDown();
+            }
+
+
+            if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x)
+            {
+                goRight();
+            }
+            if (isGoYDone && gameObject.transform.position.x > enemy.transform.position.x)
+            {
+                goLeft();
+            }
+        }
+        if ( enemy.tag == "knight")
+        {
+            if (gameObject.transform.position.y + 0.1f < enemy.gameObject.transform.position.y)
+            {
+                goUp();
+                print("goup");
+            }
+
+            if (gameObject.transform.position.y - 0.45f > enemy.gameObject.transform.position.y )
+            {
+
+                goDown();
+            }
+
+
+            if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x)
+            {
+                goRight();
+            }
+            if (isGoYDone && gameObject.transform.position.x > enemy.transform.position.x)
+            {
+                goLeft();
+            }
         }
 
 
+        if(enemy.tag == "darkKnight")
+        {
+            if (gameObject.transform.position.y - 0.1f< enemy.gameObject.transform.position.y)
+            {
+                goUp();
+                print("goup");
+            }
 
+            if (gameObject.transform.position.y + 0.45f  > enemy.gameObject.transform.position.y)
+            {
+
+                goDown();
+            }
+
+
+            if (isGoYDone && gameObject.transform.position.x < enemy.transform.position.x)
+            {
+                goRight();
+            }
+            if (isGoYDone && gameObject.transform.position.x > enemy.transform.position.x)
+            {
+                goLeft();
+            }
+        }
     }
 
 
@@ -196,6 +267,7 @@ public class playerGoToEnemy : MonoBehaviour
    
     void goUp()
     {
+        print("goUp");
         rigidbodyComp.velocity = new Vector2(0, 0.6f);
         if (enemy.tag == "heavyBandit")
         {
@@ -226,11 +298,32 @@ public class playerGoToEnemy : MonoBehaviour
 
             }
         }
+        if (enemy.tag == "bringer")
+        {
+            if (gameObject.transform.position.y + 0.4f > enemy.gameObject.transform.position.y)
+            {
+                isNeedMove = false;
+                rigidbodyComp.velocity = Vector2.zero;
+                isGoYDone = true;
+
+            }
+            if (enemy.tag == "darkKnight")
+            {
+                if (gameObject.transform.position.y > enemy.gameObject.transform.position.y)
+                {
+                    isNeedMove = false;
+                    rigidbodyComp.velocity = Vector2.zero;
+                    isGoYDone = true;
+
+                }
+            }
+         }
     }
 
 
     void goDown()
     {
+        isGoDownDon = true;
         rigidbodyComp.velocity = new Vector2(0, -0.6f);
         if (enemy.tag == "heavyBandit")
         {
@@ -239,6 +332,19 @@ public class playerGoToEnemy : MonoBehaviour
                 isNeedMove = false;
                 rigidbodyComp.velocity = Vector2.zero;
                 isGoYDone = true;
+                isGoDownDon = false;
+
+            }
+        }
+        if (enemy.tag == "bringer")
+        {
+            if (gameObject.transform.position.y   < enemy.gameObject.transform.position.y)
+            {
+                isNeedMove = false;
+                rigidbodyComp.velocity = Vector2.zero;
+                isGoYDone = true;
+                isGoDownDon = true;
+
 
             }
         }
@@ -254,9 +360,21 @@ public class playerGoToEnemy : MonoBehaviour
         }
         if (enemy.tag == "knight")
         {
-            if (gameObject.transform.position.y -0.02f  < enemy.gameObject.transform.position.y)
+            if (gameObject.transform.position.y  < enemy.gameObject.transform.position.y)
             {
-                gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.15f);
+             //   gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 0.15f , -1f);
+              //  print("F");
+                isNeedMove = false;
+                rigidbodyComp.velocity = Vector2.zero;
+                isGoYDone = true;
+                print("isYDone " + isGoYDone);
+
+            }
+        }
+        if (enemy.tag == "darkKnight")
+        {
+            if (gameObject.transform.position.y + 0.4f < enemy.gameObject.transform.position.y)
+            {
                 isNeedMove = false;
                 rigidbodyComp.velocity = Vector2.zero;
                 isGoYDone = true;

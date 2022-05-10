@@ -38,4 +38,9 @@ public class enemyAnim : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
+  [SerializeField]  void destroyBringer()
+    {
+        Destroy(gameObject);
+    }
+
 }

@@ -48,6 +48,11 @@ public class enemyTextPower : MonoBehaviour
 
       
         }
+        if (gameObject.transform.parent.tag == "bringer")
+        {
+            gameObject.transform.localPosition = new Vector2(0.272f, 0.25f);
+
+        }
     }
     private void LateUpdate()
     {
@@ -77,7 +82,6 @@ public class enemyTextPower : MonoBehaviour
         {
             toMinus();
         }
-        print(numOfChange);
     }
 
 

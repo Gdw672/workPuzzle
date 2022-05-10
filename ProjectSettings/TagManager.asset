@@ -7,6 +7,8 @@ TagManager:
   - enemy
   - heavyBandit
   - knight
+  - bringer
+  - darkKnight
   layers:
   - Default
   - TransparentFX
