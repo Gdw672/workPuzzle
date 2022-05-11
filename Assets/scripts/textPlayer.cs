@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class textPlayer : MonoBehaviour
 {
-    TextMesh text;
+    TextMeshPro text;
     void Start()
     {
         takePower();
@@ -17,7 +17,7 @@ public class textPlayer : MonoBehaviour
 
    internal void takePower()
     {
-        text = GetComponent<TextMesh>();
+        text = GetComponent<TextMeshPro>();
         text.text = powerPlayer.powerOfPlayer.ToString();
     }
 }

@@ -14,5 +14,10 @@ public class menuScripts : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-   
+    [SerializeField]
+    public void loadStore()
+    {
+        SceneManager.LoadScene(2);
+    }
+
 }

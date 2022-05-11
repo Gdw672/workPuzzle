@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class enemyTextPower : MonoBehaviour
 {
     bool wasDoneFunc = false;
     int randonNums;
     float power;
     Vector2 scaleOfText;
-    TextMesh textmesh;
+    TextMeshPro textmesh;
    static System.Random rnd = new System.Random();
 
     private void Start()
@@ -16,11 +16,10 @@ public class enemyTextPower : MonoBehaviour
 
 
         power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
-        textmesh = GetComponent<TextMesh>();
+        textmesh = GetComponent<TextMeshPro>();
         scaleOfText = gameObject.transform.localScale;
-         textmesh = GetComponent<TextMesh>();
+         textmesh = GetComponent<TextMeshPro>();
         randonNums = rnd.Next(1, 8);
-        choosePositionText();
       
     }
     private void Update()
