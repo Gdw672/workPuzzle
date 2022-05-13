@@ -64,7 +64,7 @@ void choosePositionText()
 
     void changeText()
     {
-        int numOfChange = rnd.Next(1, 6);
+        int numOfChange = rnd.Next(1, 5);
         if(numOfChange == 1)
         {
             toSimple();
