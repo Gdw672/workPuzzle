@@ -5,17 +5,23 @@ using UnityEngine;
 public class powerPlayer : MonoBehaviour
 
 {
+    private System.Random rnd = new System.Random();
     enemyAnim enemyAnimComp;
     playerGoToEnemy playerGo;
     playerAnim anim;
     textPlayer text;
     GameObject enemyTime;
+    bool isWas = false;
    
-    public static int powerOfPlayer = 9;
+    public static int powerOfPlayer;
 
+    private void Awake()
+    {
+
+    }
     void Start()
     {
-        text = transform.GetChild(1).GetComponent<textPlayer>();
+        text = transform.parent.GetChild(0).GetComponent<textPlayer>();
         playerGo = GetComponent<playerGoToEnemy>();
         anim = GetComponent<playerAnim>();
     }
@@ -23,7 +29,11 @@ public class powerPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(isWas == false)
+        {
+            powerOfPlayer = rnd.Next(5, 9 + classLvlAndScore.lvl);
+            isWas = true;
+        }
     }
 
   public void checkPower(GameObject enemy)
@@ -34,20 +44,13 @@ public class powerPlayer : MonoBehaviour
         {
             enemyTime = enemy;
 
-            if (enemy.tag == "knight")
-            {
-                
-              //  StartCoroutine(enemyAnimComp.startDeath(0.45f));
-            }
-            if(enemy.tag == "heavyBandit")
-            {
-            //    StartCoroutine(enemyAnimComp.startDeath(0.42f));
-
-            }
-
+        
             powerOfPlayer += enemy.GetComponent<powerEnemy>().powerEnemyInt;
             playerGo.wasEnemyDestroy = true;
             anim.startAttack();
+            classLvlAndScore.score += enemy.GetComponent<powerEnemy>().powerEnemyInt;
+            StartCoroutine(playMusic());
+            
         }
  
         if(powerOfPlayer < enemy.gameObject.GetComponent<powerEnemy>().powerEnemyInt)
@@ -58,6 +61,12 @@ public class powerPlayer : MonoBehaviour
 
     }
 
+    IEnumerator playMusic()
+    {
+        yield return new WaitForSeconds(0.3f);
+        var play = Camera.main.GetComponent<audioPlay>();
+        play.playAudio(play.hit);
+    }
    [SerializeField] void enemyStartDeath()
     {
         enemyTime.GetComponent<Animator>().SetBool("isHit", true);

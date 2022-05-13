@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class playerAnim : MonoBehaviour, IPointerDownHandler
-{
+{    
     Animator animator;
     Rigidbody2D rigidbodyOfPlayer;
     Vector2 playerSize;

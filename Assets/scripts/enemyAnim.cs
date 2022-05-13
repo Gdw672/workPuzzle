@@ -25,6 +25,8 @@ public class enemyAnim : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         print("start");
         animator.SetBool("attack", true);
+
+       
     }
     internal void stopAttack()
     {
@@ -35,12 +37,17 @@ public class enemyAnim : MonoBehaviour
    [SerializeField] void deathOfCollider()
     {
         enemyCollider.enabled = false;
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        gameObject.transform.parent.GetChild(0).gameObject.SetActive(false);
+        classLvlAndScore.sumOfDestroyEnemy += 1;
+
     }
 
-  [SerializeField]  void destroyBringer()
+    [SerializeField]  void destroyBringer()
     {
-        Destroy(gameObject);
+        gameObject.transform.parent.GetChild(0).gameObject.SetActive(false);
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        classLvlAndScore.sumOfDestroyEnemy += 1;
+
     }
 
 }

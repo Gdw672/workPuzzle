@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
+[SelectionBase]
 public class enemyTextPower : MonoBehaviour
 {
+  
     bool wasDoneFunc = false;
     int randonNums;
     float power;
@@ -15,26 +18,17 @@ public class enemyTextPower : MonoBehaviour
     {
 
 
-        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        power = transform.parent.GetChild(1).GetComponent<powerEnemy>().powerEnemyInt;
+
         textmesh = GetComponent<TextMeshPro>();
         scaleOfText = gameObject.transform.localScale;
          textmesh = GetComponent<TextMeshPro>();
         randonNums = rnd.Next(1, 8);
-      
-    }
-    private void Update()
-    {
-
-        if (wasDoneFunc == false)
-        {
-            changeText();
-            wasDoneFunc = true;
-        }
-        gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x, gameObject.transform.localScale.y);
 
     }
-
-    void choosePositionText()
+  
+    
+void choosePositionText()
     { 
         if (gameObject.transform.parent.tag == "knight")
         {
@@ -52,10 +46,20 @@ public class enemyTextPower : MonoBehaviour
             gameObject.transform.localPosition = new Vector2(0.272f, 0.25f);
 
         }
+        if (gameObject.transform.parent.GetChild(1).tag == "darkKnight")
+        {
+            gameObject.transform.localPosition = new Vector2(-0.02f, -0.01f);
+
+        }
     }
     private void LateUpdate()
     {
         gameObject.transform.localScale = scaleOfText;
+        if (wasDoneFunc == false)
+        {
+            changeText();
+            wasDoneFunc = true;
+        }
     }
 
     void changeText()
@@ -86,7 +90,8 @@ public class enemyTextPower : MonoBehaviour
 
     void toSimple()
     {
-        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        power = transform.parent.GetChild(1).GetComponent<powerEnemy>().powerEnemyInt;
+
         textmesh.text = power.ToString();
 
         if (power % 2 == 0)
@@ -106,7 +111,8 @@ public class enemyTextPower : MonoBehaviour
 
     void degree()
     {
-        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        power = transform.parent.GetChild(1).GetComponent<powerEnemy>().powerEnemyInt;
+
         textmesh.text = power.ToString();
         double num = Mathf.Sqrt(power);
         string[] array = num.ToString().Split(',');
@@ -119,8 +125,10 @@ public class enemyTextPower : MonoBehaviour
 
     void sqrtText()
     {
-        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
-        if(power < 20)
+
+        power = transform.parent.GetChild(1).GetComponent<powerEnemy>().powerEnemyInt;
+
+        if (power < 20)
         {
             textmesh.text = $"√{power * power}";
 
@@ -135,7 +143,7 @@ public class enemyTextPower : MonoBehaviour
 
     void toPlus()
     {
-        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        power = transform.parent.GetChild(1).GetComponent<powerEnemy>().powerEnemyInt;
 
         textmesh.text = power.ToString();
 
@@ -148,7 +156,7 @@ public class enemyTextPower : MonoBehaviour
   
     void toMinus()
     {
-        power = transform.parent.gameObject.GetComponent<powerEnemy>().powerEnemyInt;
+        power = transform.parent.GetChild(1).GetComponent<powerEnemy>().powerEnemyInt;
 
         textmesh.text = power.ToString();
 

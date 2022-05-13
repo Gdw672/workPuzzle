@@ -5,7 +5,7 @@ using UnityEngine;
 public class randomSpawnofEnemy : MonoBehaviour
 {
     [SerializeField] private GameObject enemy1, enemy2, enemy3, enemy4, enemy5, enemy6;
-    System.Random rnd = new System.Random();
+   static System.Random rnd = new System.Random();
 
    
 
@@ -38,6 +38,9 @@ public class randomSpawnofEnemy : MonoBehaviour
         }
         
     }
-   
-    
+
+    private void Start()
+    {
+        var clone = Instantiate(randomSpqn(), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -6), Quaternion.identity) ;
+    }
 }

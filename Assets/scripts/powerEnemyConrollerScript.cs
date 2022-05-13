@@ -5,15 +5,32 @@ public class powerEnemyConrollerScript : MonoBehaviour
     public powerEnemy[] powerEnemyMass;
     System.Random random = new System.Random();
     int power;
+    bool isWasVoid = false;
 
     private void Start()
     {
 
-        powerEnemyMass = GameObject.FindObjectsOfType<powerEnemy>();
-        randomArray(powerEnemyMass);
-        givePowerEnemy();
+        
     }
 
+   
+
+    private void Update()
+    {
+       
+       
+    }
+
+    private void LateUpdate()
+    {
+        if (isWasVoid == false)
+        {
+            powerEnemyMass = GameObject.FindObjectsOfType<powerEnemy>();
+            randomArray(powerEnemyMass);
+            givePowerEnemy();
+            isWasVoid = true;
+        }
+    }
     void givePowerEnemy()
     {
         power = random.Next(5, powerPlayer.powerOfPlayer);

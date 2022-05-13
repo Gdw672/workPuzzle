@@ -20,4 +20,25 @@ public class menuScripts : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+   public void restartLvlOrNext()
+    {
+        if(classLvlAndScore.isWasLvlDone)
+        {
+            classLvlAndScore.lvl += 1;
+            saves save = new saves();
+            save.saveLvl();
+            print("lvl now " + save.loadLvl());
+            loadGame();
+        }
+        if(classLvlAndScore.isWasLvlDone == false)
+        {
+            loadGame();
+        }
+    }
+
+ public  void exitgame()
+    {
+        Application.Quit();
+    }
+
 }

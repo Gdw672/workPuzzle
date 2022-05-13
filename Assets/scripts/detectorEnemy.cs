@@ -5,6 +5,7 @@ using UnityEngine;
 public class detectorEnemy : MonoBehaviour
 {
     powerPlayer power;
+    
     playerGoToEnemy playerGo;
     Rigidbody2D playerRigidbody;
     void Start()

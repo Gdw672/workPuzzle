@@ -72,15 +72,12 @@ public class playerGoToEnemy : MonoBehaviour
                     }
 
 
-                    if ((hit.collider.gameObject.transform.position.x != gameObject.transform.position.x || hit.collider.gameObject.transform.position.y != gameObject.transform.position.y) && dubleClick == 2 && wasEnemyDestroy == false)
+                    if ((hit.collider.gameObject.transform.position.x != gameObject.transform.position.x || hit.collider.gameObject.transform.position.y != gameObject.transform.position.y) && dubleClick == 2)
                     {
                         isNeedMove = true;
                     }
 
-                    if ((hit.collider.gameObject.transform.position.x != gameObject.transform.position.x || hit.collider.gameObject.transform.position.y != gameObject.transform.position.y) && dubleClick == 2 && wasEnemyDestroy == true)
-                    {
-                        isNeedMove = true;
-                    }
+                  
 
                 }
             }
@@ -103,24 +100,7 @@ public class playerGoToEnemy : MonoBehaviour
                 goBackAfterDestroy();
             }
 
-            /* if(enemy.tag == "heavyBandit")
-             {
-                 if (gameObject.transform.position.y  > enemy.gameObject.transform.position.y)
-                 {
-                     isNeedMove = false;
-                     rigidbodyComp.velocity = Vector2.zero;
-                 }
-            }
-             if (enemy.tag == "enemy")
-             {
-                 if (gameObject.transform.position.y + 0.25f > enemy.gameObject.transform.position.y)
-                 {
-                     isNeedMove = false;
-                     rigidbodyComp.velocity = Vector2.zero;
-                 }
-             }*/
-
-
+          
 
         }
 
@@ -131,12 +111,7 @@ public class playerGoToEnemy : MonoBehaviour
 
 
 
-        /* if (isCollisionWithEnemy)
-         {
-             isNeedMove = false;
-             rigidbodyComp.velocity = Vector2.zero;
-
-         }*/
+       
 
         if (enemy == null)
         {
@@ -162,7 +137,7 @@ public class playerGoToEnemy : MonoBehaviour
 
     void goingToEnemy()
     {
-        if (enemy.tag != "bringer" && enemy.tag != "knight" && enemy.tag != "darkKnight")
+        if (enemy.tag == "heavyBandit")
         {
             if (gameObject.transform.position.y < enemy.gameObject.transform.position.y)
             {
@@ -190,11 +165,11 @@ public class playerGoToEnemy : MonoBehaviour
         {
             if (gameObject.transform.position.y + 0.3f < enemy.gameObject.transform.position.y)
             {
+                
                 goUp();
-                print("goup");
             }
 
-            if (gameObject.transform.position.y - 0.2f> enemy.gameObject.transform.position.y)
+            if (gameObject.transform.position.y> enemy.gameObject.transform.position.y)
             {
 
                 goDown();
@@ -215,10 +190,9 @@ public class playerGoToEnemy : MonoBehaviour
             if (gameObject.transform.position.y + 0.1f < enemy.gameObject.transform.position.y)
             {
                 goUp();
-                print("goup");
             }
 
-            if (gameObject.transform.position.y - 0.45f > enemy.gameObject.transform.position.y )
+            if (gameObject.transform.position.y - 0.2f > enemy.gameObject.transform.position.y )
             {
 
                 goDown();
@@ -267,7 +241,8 @@ public class playerGoToEnemy : MonoBehaviour
    
     void goUp()
     {
-        print("goUp");
+      
+
         rigidbodyComp.velocity = new Vector2(0, 0.6f);
         if (enemy.tag == "heavyBandit")
         {
@@ -399,6 +374,7 @@ public class playerGoToEnemy : MonoBehaviour
         if (gameObject.transform.position.x > enemy.transform.position.x && isCollisionWithEnemy == false)
         {
             rigidbodyComp.velocity = new Vector2(-0.6f, 0);
+           // enemy.transform.localScale = new Vector2(-enemy.transform.localScale.x, enemy.transform.localScale.y);
         }
         else if (gameObject.transform.position.x > enemy.transform.position.x && isCollisionWithEnemy == true)
         {
