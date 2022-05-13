@@ -71,7 +71,7 @@ void choosePositionText()
         }
         if(numOfChange == 2)
         {
-            degree();
+            toMinus();
         }
        if(numOfChange == 3)
         {
@@ -81,10 +81,7 @@ void choosePositionText()
         {
             toPlus();
         }
-       if(numOfChange == 5)
-        {
-            toMinus();
-        }
+       
     }
 
 
@@ -109,19 +106,7 @@ void choosePositionText()
         }
     }
 
-    void degree()
-    {
-        power = transform.parent.GetChild(1).GetComponent<powerEnemy>().powerEnemyInt;
-
-        textmesh.text = power.ToString();
-        double num = Mathf.Sqrt(power);
-        string[] array = num.ToString().Split(',');
-        if (array.Length == 1)
-        {
-            print(power);
-            textmesh.text = $"{ Mathf.Sqrt(power)}² ";
-        }
-    }
+   
 
     void sqrtText()
     {
